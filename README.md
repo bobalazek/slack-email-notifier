@@ -1,8 +1,8 @@
 # Slack Email Notifier
-A simple script, that sends notifications to you channel, after you get an email.
+A simple script, that sends notifications to your slack channel, after you get an email.
 
 ## Setup ##
-* Download the script
+* Download the script from GitHub
 * Extract it on your server
 * Configure settings (under app/config.php)
 * Setup a cron job (`curl -X GET 'http://your-domain.com/slack-email-notifier/execute?token=YOUR-TOKEN'`)
