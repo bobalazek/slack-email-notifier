@@ -42,6 +42,7 @@ class ExecuteCommand
 
             if(count($errors)) {
                 $response['errors'] = $errors;
+                $response['ok'] = false;
             }
         }
 
