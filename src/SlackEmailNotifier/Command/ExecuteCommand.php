@@ -9,6 +9,11 @@ use PhpImap\IncomingMailAttachment;
 class ExecuteCommand
 {
     public $app;
+    public $mailboxSlackDefaults = array(
+        'username' => 'Slack notifier',
+        'icon_emoji' => ':ghost:',
+        'channel' => '#general',
+    );
 
     public function __construct(\Silex\Application $app) {
         $this->app = $app;
@@ -103,18 +108,26 @@ class ExecuteCommand
                     );
 
                     $slackAttachments = array($slackAttachment);
-
-                    $slackData = array(
-                        'username' => $mailboxData['slack']['username'],
-                        'icon_emoji' => $mailboxData['slack']['icon_emoji'],
-                        'channel' => $mailboxData['slack']['channel'],
-                        'attachments' => json_encode($slackAttachments),
-                    );
-
-                    if(isset($mailboxData['slack']['text']) &&
-                        $mailboxData['slack']['text']) {
+                    
+                    $slackData = $this->$mailboxSlackDefaults;
+                    
+                    if(isset($mailboxData['slack']['username'])) {
+                        $slackData['username'] = $mailboxData['slack']['username'];
+                    }
+                    
+                    if(isset($mailboxData['slack']['icon_emoji'])) {
+                        $slackData['icon_emoji'] = $mailboxData['slack']['icon_emoji'];
+                    }
+                    
+                    if(isset($mailboxData['slack']['channel'])) {
+                        $slackData['channel'] = $mailboxData['slack']['channel'];
+                    }
+                    
+                    if(isset($mailboxData['slack']['text'])) {
                         $slackData['text'] = $mailboxData['slack']['text'];
                     }
+                    
+                    $slackData['attachments'] = json_encode($slackAttachments);
 
                     $slackResponse = $this->app['slack.commander']->execute(
                         'chat.postMessage',
