@@ -1,7 +1,7 @@
 <?php
 
 $config = array(
-    'token' => 'CHANGEME',
+    'token' => 'CHANGEME', // Used for the cron task http://.../slack-email-notifier/execute?token=CHANGEME)
     'slack' => array(
         'token' => 'xoxp-xxx-xxx-xxx', // Slack Web API Token - https://api.slack.com/web
     ),
